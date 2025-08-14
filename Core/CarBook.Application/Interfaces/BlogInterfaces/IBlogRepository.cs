@@ -10,5 +10,7 @@ namespace CarBook.Application.Interfaces.BlogInterfaces
     public interface IBlogRepository
     {
         Task<List<Blog>> GetLastThreeBlogsWithAuthor();
+        Task<List<Blog>> GetAllBlogWithAuthor();
+        Task<List<Blog>> GetBlogByAuthorId(int id);
     }
 }

@@ -1,4 +1,4 @@
-﻿@model List<ResutlBlogDto>
+﻿@model List<ResultAllBlogWithAuthorDto>
 
 <section class="ftco-section">
     <div class="container">
@@ -17,7 +17,7 @@
                         </a>
                         <div class="text pt-4">
                             <div class="meta mb-3">
-                                <div><a href="#">@item.CreatedDate</a></div>
+                                <div><a href="#">@item.CreatedDate.ToShortDateString()</a></div>
                                 <div><a href="#">@item.AuthorName</a></div>
                                 <div><a href="#" class="meta-chat"><span class="icon-chat"></span> </a></div>
                             </div>

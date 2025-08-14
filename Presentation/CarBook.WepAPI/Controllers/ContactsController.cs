@@ -1,6 +1,6 @@
-﻿using CarBook.Application.Features.CQRS.Commands.ContactCommands;
-using CarBook.Application.Features.CQRS.Handlers.ContactHandlers;
-using CarBook.Application.Features.CQRS.Queries.ContactQueries;
+﻿using CarBook.Application.Features.Mediator.Commands.ContactCommands;
+using CarBook.Application.Features.Mediator.Queries.ContactQueries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,53 +10,45 @@ namespace CarBook.WebAPI.Controllers
     [ApiController]
     public class ContactsController : ControllerBase
     {
-        private readonly CreateContactCommandHandler _createContactCommandHandler;
-        private readonly UpdateContactCommandHandler _updateContactCommandHandler;
-        private readonly RemoveContactCommandHandler _removeContactCommandHandler;
-        private readonly GetContactByIdQueryHandler _getContactByIdQueryHandler;
-        private readonly GetContactQueryHandler _getContactQueryHandler;
+        private readonly IMediator _mediator;
 
-        public ContactsController(CreateContactCommandHandler createContactCommandHandler, UpdateContactCommandHandler updateContactCommandHandler, RemoveContactCommandHandler removeContactCommandHandler, GetContactByIdQueryHandler getContactByIdQueryHandler, GetContactQueryHandler getContactQueryHandler)
+        public ContactsController(IMediator mediator)
         {
-            _createContactCommandHandler = createContactCommandHandler;
-            _updateContactCommandHandler = updateContactCommandHandler;
-            _removeContactCommandHandler = removeContactCommandHandler;
-            _getContactByIdQueryHandler = getContactByIdQueryHandler;
-            _getContactQueryHandler = getContactQueryHandler;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetContactList()
         {
-            var values = await _getContactQueryHandler.Handle();
+            var values = await _mediator.Send(new GetContactQuery());
             return Ok(values);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetContactById(int id)
         {
-            var value = await _getContactByIdQueryHandler.Handle(new GetContactByIdQuery(id));
+            var value = await _mediator.Send(new GetContactByIdQuery(id));
             return Ok(value);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateContact(CreateContactCommand command)
         {
-            await _createContactCommandHandler.Handle(command);
+            await _mediator.Send(command);
             return Ok("İletişim Bilgisi Eklendi.");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateContact(UpdateContactCommand command)
         {
-            await _updateContactCommandHandler.Handle(command);
+            await _mediator.Send(command);
             return Ok("İletişim Bilgisi Güncellendi.");
         }
 
         [HttpDelete]
         public async Task<IActionResult> RemoveContact(int id)
         {
-            await _removeContactCommandHandler.Handle(new RemoveContactCommand(id));
+            await _mediator.Send(new RemoveContactCommand(id));
             return Ok("İletişim Bilgisi Silindi.");
         }
     }

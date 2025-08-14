@@ -1,5 +1,4 @@
-﻿using CarBook.Application.Features.CQRS.Results.CarResults;
-using CarBook.Application.Features.Mediator.Results.BlogResults;
+﻿using CarBook.Application.Features.Mediator.Results.BlogResults;
 using MediatR;
 using System;
 using System.Collections.Generic;
