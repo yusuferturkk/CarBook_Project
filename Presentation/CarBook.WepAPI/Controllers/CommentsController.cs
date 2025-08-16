@@ -30,6 +30,13 @@ namespace CarBook.WepAPI.Controllers
             return Ok(value);
         }
 
+        [HttpGet("CommentListByBlog")]
+        public IActionResult CommentListByBlog(int id)
+        {
+            var value = _repository.GetCommentsByBlogId(id);
+            return Ok(value);
+        }
+
         [HttpPost]
         public IActionResult CreateComment(Comment comment)
         {

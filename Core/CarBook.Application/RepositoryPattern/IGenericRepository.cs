@@ -13,5 +13,6 @@ namespace CarBook.Application.RepositoryPattern
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
+        List<T> GetCommentsByBlogId(int id);
     }
 }
