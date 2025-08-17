@@ -28,6 +28,7 @@ namespace CarBook.Application.Features.Mediator.Handlers.BannerHandlers
                 BannerId = x.BannerId,
                 Title = x.Title,
                 Description = x.Description,
+                ImageUrl = x.ImageUrl,
                 VideoDescription = x.VideoDescription,
                 VideoUrl = x.VideoUrl,
             }).ToList();

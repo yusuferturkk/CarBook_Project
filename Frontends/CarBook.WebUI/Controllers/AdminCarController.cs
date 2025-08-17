@@ -19,7 +19,7 @@ namespace CarBook.WebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:5201/api/Cars/GetCarWithBrand");
+            var responseMessage = await client.GetAsync("https://localhost:7200/api/Cars/GetCarWithBrand");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -33,7 +33,7 @@ namespace CarBook.WebUI.Controllers
         public async Task<IActionResult> CreateCar()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:5201/api/Brands");
+            var responseMessage = await client.GetAsync("https://localhost:7200/api/Brands");
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<ResultBrandDto>>(jsonData);
 
@@ -53,7 +53,7 @@ namespace CarBook.WebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createCarDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("http://localhost:5201/api/Cars", stringContent);
+            var responseMessage = await client.PostAsync("https://localhost:7200/api/Cars", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -64,7 +64,7 @@ namespace CarBook.WebUI.Controllers
         public async Task<IActionResult> RemoveCar(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"http://localhost:5201/api/Cars/{id}");
+            var responseMessage = await client.DeleteAsync($"https://localhost:7200/api/Cars/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -76,7 +76,7 @@ namespace CarBook.WebUI.Controllers
         public async Task<IActionResult> UpdateCar(int id)
         {
             var client1 = _httpClientFactory.CreateClient();
-            var responseMessage1 = await client1.GetAsync("http://localhost:5201/api/Brands");
+            var responseMessage1 = await client1.GetAsync("https://localhost:7200/api/Brands");
             var jsonData1 = await responseMessage1.Content.ReadAsStringAsync();
             var values1 = JsonConvert.DeserializeObject<List<ResultBrandDto>>(jsonData1);
 
@@ -89,7 +89,7 @@ namespace CarBook.WebUI.Controllers
             ViewBag.BrandValues = brandValues;
 
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"http://localhost:5201/api/Cars/{id}");
+            var responseMessage = await client.GetAsync($"https://localhost:7200/api/Cars/{id}");
             if(responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -105,7 +105,7 @@ namespace CarBook.WebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateCarDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("http://localhost:5201/api/Cars/", stringContent);
+            var responseMessage = await client.PutAsync("https://localhost:7200/api/Cars/", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

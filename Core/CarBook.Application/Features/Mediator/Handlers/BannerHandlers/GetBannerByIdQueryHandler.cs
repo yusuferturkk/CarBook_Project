@@ -30,6 +30,7 @@ namespace CarBook.Application.Features.Mediator.Handlers.BannerHandlers
                 BannerId = value.BannerId,
                 Title = value.Title,
                 Description = value.Description,
+                ImageUrl = value.ImageUrl,
                 VideoDescription = value.VideoDescription,
                 VideoUrl = value.VideoUrl,
             };

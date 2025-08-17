@@ -25,6 +25,7 @@ namespace CarBook.Application.Features.Mediator.Handlers.BannerHandlers
             {
                 Title = request.Title,
                 Description = request.Description,
+                ImageUrl = request.ImageUrl,
                 VideoDescription = request.VideoDescription,
                 VideoUrl = request.VideoUrl,
             });
