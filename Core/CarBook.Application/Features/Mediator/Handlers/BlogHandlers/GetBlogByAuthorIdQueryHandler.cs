@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Queries.BlogQueries;
 using CarBook.Application.Features.Mediator.Results.BlogResults;
 using CarBook.Application.Interfaces.BlogInterfaces;
+using CarBook.Application.Interfaces.CarPricingInterfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,17 +22,17 @@ namespace CarBook.Application.Features.Mediator.Handlers.BlogHandlers
 
         public async Task<List<GetBlogByAuthorIdQueryResult>> Handle(GetBlogByAuthorIdQuery request, CancellationToken cancellationToken)
         {
-            var values = await _repository.GetBlogByAuthorId(request.Id);
+            var values = await _repository.GetAllBlogWithAuthor();
             return values.Select(x => new GetBlogByAuthorIdQueryResult
             {
                 AuthorId = x.AuthorId,
-                AuthorName = x.Author.Name,
                 BlogId = x.BlogId,
                 CategoryId = x.CategoryId,
                 CoverImageUrl = x.CoverImageUrl,
                 CreatedDate = x.CreatedDate,
-                Description = x.Description,
                 Title = x.Title,
+                AuthorName = x.Author.Name,
+                Description = x.Description,
                 AuthorDescription = x.Author.Description,
                 AuthorImageUrl = x.Author.ImageUrl
             }).ToList();

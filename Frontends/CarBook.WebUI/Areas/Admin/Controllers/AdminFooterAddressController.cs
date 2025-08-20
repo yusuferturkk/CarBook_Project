@@ -20,7 +20,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7200/api/FooterAddresss");
+            var responseMessage = await client.GetAsync("https://localhost:7200/api/FooterAddresses");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -44,7 +44,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createFooterAddressDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7200/api/FooterAddresss", stringContent);
+            var responseMessage = await client.PostAsync("https://localhost:7200/api/FooterAddresses", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "AdminFooterAddress", new { area = "Admin" });
@@ -56,7 +56,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> RemoveFooterAddress(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"https://localhost:7200/api/FooterAddresss?id={id}");
+            var responseMessage = await client.DeleteAsync($"https://localhost:7200/api/FooterAddresses?id={id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "AdminFooterAddress", new { area = "Admin" });
@@ -69,7 +69,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateFooterAddress(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7200/api/FooterAddresss/{id}");
+            var responseMessage = await client.GetAsync($"https://localhost:7200/api/FooterAddresses/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -86,7 +86,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateFooterAddressDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("https://localhost:7200/api/FooterAddresss/", stringContent);
+            var responseMessage = await client.PutAsync("https://localhost:7200/api/FooterAddresses/", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "AdminFooterAddress", new { area = "Admin" });
