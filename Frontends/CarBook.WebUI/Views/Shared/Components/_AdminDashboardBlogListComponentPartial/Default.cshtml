@@ -1,0 +1,37 @@
+﻿@model List<ResultAllBlogWithAuthorDto>
+
+@{
+    int count = 0;
+}
+
+<div class="col-xl-6">
+    <div class="card">
+        <div class="card-body">
+
+            <h4 class="card-title">Son Bloglar</h4>
+            <p class="card-subtitle mb-4 font-size-13">
+                Yazarlarımızın Son 5 Blog Listesi
+            </p>
+
+            <div class="table-responsive">
+                <table class="table table-centered table-hover table-xl mb-0" id="recent-orders">
+                    <tr>
+                        <th class="border-top-0">Blog Başlığı</th>
+                        <th class="border-top-0">Yazar</th>
+                        <th class="border-top-0">Blogu Aç</th>
+                    </tr>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-truncate">@item.Title</td>
+                                <td class="text-truncate">@item.AuthorName</td>
+                                <td class="text-truncate"><a href="/Blog/BlogDetail/@item.BlogId" class="btn btn-primary">Blogu Aç</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+</div>
