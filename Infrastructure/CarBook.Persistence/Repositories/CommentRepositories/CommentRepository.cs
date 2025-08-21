@@ -1,4 +1,5 @@
-﻿using CarBook.Application.RepositoryPattern;
+﻿using CarBook.Application.Interfaces.CommentInterfaces;
+using CarBook.Application.RepositoryPattern;
 using CarBook.Domain.Entities;
 using CarBook.Persistence.Context;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Persistence.Repositories.CommentRepositories
 {
-    public class CommentRepository<T> : IGenericRepository<Comment>
+    public class CommentRepository<T> : ICommentRepository<Comment>
     {
         private readonly CarBookContext _context;
 
@@ -57,6 +58,11 @@ namespace CarBook.Persistence.Repositories.CommentRepositories
         {
             _context.Update(entity);
             _context.SaveChanges();
+        }
+
+        public int GetCountCommentByBlog(int id)
+        {
+            return _context.Set<Comment>().Where(x => x.BlogId == id).Count();
         }
     }
 }

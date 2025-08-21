@@ -22,17 +22,12 @@ namespace CarBook.Application.Features.Mediator.Handlers.BlogHandlers
 
         public async Task<List<GetBlogByAuthorIdQueryResult>> Handle(GetBlogByAuthorIdQuery request, CancellationToken cancellationToken)
         {
-            var values = await _repository.GetAllBlogWithAuthor();
+            var values = await _repository.GetBlogByAuthorId(request.Id);
             return values.Select(x => new GetBlogByAuthorIdQueryResult
             {
                 AuthorId = x.AuthorId,
                 BlogId = x.BlogId,
-                CategoryId = x.CategoryId,
-                CoverImageUrl = x.CoverImageUrl,
-                CreatedDate = x.CreatedDate,
-                Title = x.Title,
                 AuthorName = x.Author.Name,
-                Description = x.Description,
                 AuthorDescription = x.Author.Description,
                 AuthorImageUrl = x.Author.ImageUrl
             }).ToList();

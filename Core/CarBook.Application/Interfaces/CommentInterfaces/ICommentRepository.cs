@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.RepositoryPattern
+namespace CarBook.Application.Interfaces.CommentInterfaces
 {
-    public interface IGenericRepository<T> where T : class
+    public interface ICommentRepository<T> where T : class
     {
         T GetById(int id);
         List<T> GetAll();
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
+        List<T> GetCommentsByBlogId(int id);
+        int GetCountCommentByBlog(int id);
     }
 }
