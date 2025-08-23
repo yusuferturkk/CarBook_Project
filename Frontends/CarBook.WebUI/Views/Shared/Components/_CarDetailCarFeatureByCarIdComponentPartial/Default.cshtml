@@ -1,0 +1,34 @@
+﻿@model List<GetCarByIdFeatureDto>
+
+<div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
+    <div class="row">
+
+        @{
+            int total = Model.Count;
+            int perColumn = (int)Math.Ceiling(total / 3.0); // her sütundaki eleman sayısı
+        }
+
+        @for (int col = 0; col < 3; col++)
+        {
+            <div class="col-md-4">
+                <ul class="features">
+                    @{
+                        var items = Model.Skip(col * perColumn).Take(perColumn).ToList();
+                    }
+
+                    @foreach (var item in items)
+                    {
+                        if (item.Available)
+                        {
+                            <li class="check"><span class="ion-ios-checkmark"></span>@item.FeatureName</li>
+                        }
+                        else
+                        {
+                            <li class="remove"><span class="ion-ios-close"></span>@item.FeatureName</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</div>

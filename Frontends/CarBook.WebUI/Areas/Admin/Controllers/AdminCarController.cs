@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace CarBook.WebUI.Controllers
+namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Route("Admin/AdminCar")]
     public class AdminCarController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -16,6 +18,7 @@ namespace CarBook.WebUI.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
+        [Route("Index")]
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
@@ -30,6 +33,7 @@ namespace CarBook.WebUI.Controllers
         }
 
         [HttpGet]
+        [Route("CreateCar")]
         public async Task<IActionResult> CreateCar()
         {
             var client = _httpClientFactory.CreateClient();
@@ -48,6 +52,7 @@ namespace CarBook.WebUI.Controllers
         }
 
         [HttpPost]
+        [Route("CreateCar")]
         public async Task<IActionResult> CreateCar(CreateCarDto createCarDto)
         {
             var client = _httpClientFactory.CreateClient();
@@ -61,6 +66,7 @@ namespace CarBook.WebUI.Controllers
             return View();
         }
 
+        [Route("RemoveCar")]
         public async Task<IActionResult> RemoveCar(int id)
         {
             var client = _httpClientFactory.CreateClient();
@@ -73,6 +79,7 @@ namespace CarBook.WebUI.Controllers
         }
 
         [HttpGet]
+        [Route("UpdateCar")]
         public async Task<IActionResult> UpdateCar(int id)
         {
             var client1 = _httpClientFactory.CreateClient();
@@ -90,7 +97,7 @@ namespace CarBook.WebUI.Controllers
 
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync($"https://localhost:7200/api/Cars/{id}");
-            if(responseMessage.IsSuccessStatusCode)
+            if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var value = JsonConvert.DeserializeObject<UpdateCarDto>(jsonData);
@@ -100,6 +107,7 @@ namespace CarBook.WebUI.Controllers
         }
 
         [HttpPost]
+        [Route("UpdateCar")]
         public async Task<IActionResult> UpdateCar(UpdateCarDto updateCarDto)
         {
             var client = _httpClientFactory.CreateClient();

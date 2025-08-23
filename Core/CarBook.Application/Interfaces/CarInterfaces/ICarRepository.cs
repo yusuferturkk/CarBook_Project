@@ -9,6 +9,7 @@ namespace CarBook.Application.Interfaces.CarRepository
 {
     public interface ICarRepository
     {
+        Task<Car> GetCarByIdWithBrand(int id);
         Task<List<Car>> GetCarsListWithBrand();
         Task<List<Car>> GetLastFiveCarsWithBrand();
     }

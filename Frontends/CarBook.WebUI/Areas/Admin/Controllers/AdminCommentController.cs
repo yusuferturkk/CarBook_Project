@@ -18,7 +18,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index/{id}")]
         public async Task<IActionResult> Index(int id)
         {
-            ViewBag.blogId = id;
+            ViewBag.BlogId = id;
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("https://localhost:7200/api/Comments/CommentListByBlog?id=" + id);
             if (responseMessage.IsSuccessStatusCode)

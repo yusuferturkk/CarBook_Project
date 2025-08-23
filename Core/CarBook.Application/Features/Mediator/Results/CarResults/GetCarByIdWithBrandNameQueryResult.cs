@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Domain.Entities
+namespace CarBook.Application.Features.Mediator.Results.CarResults
 {
-    public class Car
+    public class GetCarByIdWithBrandNameQueryResult
     {
         public int CarId { get; set; }
         public int BrandId { get; set; }
-        public Brand Brand { get; set; }
+        public string BrandName { get; set; }
         public string Model { get; set; }
         public string CoverImageUrl { get; set; }
         public int Kilometer { get; set; }
@@ -19,12 +19,5 @@ namespace CarBook.Domain.Entities
         public byte Luggage { get; set; }
         public string Fuel { get; set; }
         public string BigImageUrl { get; set; }
-        public List<CarFeature> Features { get; set; }
-        public List<CarDescription> CarDescription { get; set; }
-        public List<CarPricing> CarPricings { get; set; }
-        public List<RentACar> RentACars { get; set; }
-        public List<RentACarProcess> RentACarProcesses { get; set; }
-        public List<Reservation> Reservations { get; set; }
-        public List<Review> Reviews { get; set; }
     }
 }
