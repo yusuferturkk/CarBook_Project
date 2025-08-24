@@ -24,6 +24,14 @@ using CarBook.Domain.Entities;
 using CarBook.Persistence.Repositories.CarDescriptionRepositories;
 using CarBook.Application.Interfaces.ReviewInterfaces;
 using CarBook.Persistence.Repositories.ReviewRepositories;
+using FluentValidation.AspNetCore;
+using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using CarBook.Application.Tools;
+using CarBook.Application.Interfaces.AppUserInterfaces;
+using CarBook.Persistence.Repositories.AppUserRepositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,9 +48,28 @@ builder.Services.AddScoped(typeof(ICommentRepository<>), typeof(CommentRepositor
 builder.Services.AddScoped(typeof(ICarFeatureRepository), typeof(CarFeatureRepository));
 builder.Services.AddScoped(typeof(ICarDescriptionRepository), typeof(CarDescriptionRepository));
 builder.Services.AddScoped(typeof(IReviewRepository), typeof(ReviewRepository));
+builder.Services.AddScoped(typeof(IAppUserRepository), typeof(AppUserRepository));
 builder.Services.AddApplicationService(builder.Configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+{
+    opt.RequireHttpsMetadata = false;
+    opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidAudience = JwtTokenDefaults.ValidAudience,
+        ValidIssuer = JwtTokenDefaults.ValidIssuer,
+        ClockSkew = TimeSpan.Zero,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenDefaults.Key)),
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+    };
+});
+
+builder.Services.AddControllers().AddFluentValidation(x =>
+{
+    x.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -58,6 +85,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
